@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace mWords.Models
 {
-    public class WordsDictionary
+    public class DictionaryEntry
     {
         public int Id { get; set; }
 
-        public string English { get; set; }
+        public string Word { get; set; }
 
-        public string Polish { get; set; }
+        public string Translation { get; set; }
 
         public string Pronunciation { get; set; }
     }

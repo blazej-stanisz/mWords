@@ -17,18 +17,18 @@ namespace mWords.Data
         {
         }
 
-        public DbSet<WordsDictionary> WordsDictionary { get; set; }
+        public DbSet<DictionaryEntry> WordsDictionary { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             
-            modelBuilder.Entity<WordsDictionary>().ToTable("WordsDictionary", schemaName);
+            modelBuilder.Entity<DictionaryEntry>().ToTable("DictionaryEntries", schemaName);
 
-            modelBuilder.Entity<WordsDictionary>(entity => {
-                entity.HasIndex(e => e.English).IsUnique();
-                entity.Property(e => e.English).HasMaxLength(WordMaxLength).IsRequired();
-                entity.Property(e => e.Polish).HasMaxLength(WordMaxLength).IsRequired();
+            modelBuilder.Entity<DictionaryEntry>(entity => {
+                entity.HasIndex(e => e.Word).IsUnique();
+                entity.Property(e => e.Word).HasMaxLength(WordMaxLength).IsRequired();
+                entity.Property(e => e.Word).HasMaxLength(WordMaxLength).IsRequired();
                 entity.Property(e => e.Pronunciation).HasMaxLength(WordMaxLength);
             });
         }

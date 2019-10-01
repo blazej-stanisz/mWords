@@ -1,0 +1,6 @@
+﻿Update-Database
+Add-Migration 
+Drop-Database
+
+user: testuser@test.com
+pass: Test123!

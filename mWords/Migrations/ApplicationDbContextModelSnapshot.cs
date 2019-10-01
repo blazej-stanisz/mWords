@@ -3,17 +3,15 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using mWords.Data;
 
-namespace mWords.Data.Migrations
+namespace mWords.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190930183516_m2")]
-    partial class m2
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -221,25 +219,31 @@ namespace mWords.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("mWords.Models.WordsDictionary", b =>
+            modelBuilder.Entity("mWords.Models.DictionaryEntry", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("English")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Polish")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Pronunciation")
+                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(1000);
+
+                    b.Property<string>("Translation")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Word")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(1000);
 
                     b.HasKey("Id");
 
-                    b.ToTable("WordsDictionary","mw");
+                    b.HasIndex("Word")
+                        .IsUnique();
+
+                    b.ToTable("DictionaryEntries","mw");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
