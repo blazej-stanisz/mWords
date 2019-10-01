@@ -1,5 +1,5 @@
 ﻿using ExcelDataReader;
-using mWords.Models;
+using mWords.Models.EntityModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,8 +12,30 @@ namespace mWords.Data
     {
         public static void Initialize(ApplicationDbContext context)
         {
+            AddDictionarySets(context);
             ImportDictionaryEntries(context);
             InsertTestUserData(context);
+        }
+
+        private static void AddDictionarySets(ApplicationDbContext context)
+        {
+            context.DictionarySets.Add(new DictionarySet
+            {
+                Name = "1001 English Words Elementary//Intermediate Level EN -> PL",
+                Description = "The Elementary//Intermediate set of 1001 English words.",
+                Level = "A1-B1",
+                CoverColorHex = "#E8F8F5" // https://htmlcolorcodes.com/
+            });
+
+            context.DictionarySets.Add(new DictionarySet
+            {
+                Name = "1001 English Words Intermediate//Upper-Intermediate Level EN -> PL",
+                Description = "The Intermediate//Upper-Intermediate set of 1000 English words.",
+                Level = "B1-B2",
+                CoverColorHex = "#FEF9E7"
+            });
+
+            context.SaveChanges();
         }
 
         private static void ImportDictionaryEntries(ApplicationDbContext context)
@@ -22,7 +44,7 @@ namespace mWords.Data
 
             context.Database.EnsureCreated();
 
-            if (context.WordsDictionary.Any())
+            if (context.DictionaryEntries.Any())
             {
                 return; // DB has been seeded
             }
@@ -34,6 +56,8 @@ namespace mWords.Data
 
             try
             {
+                var firstSet = context.DictionarySets.FirstOrDefault(x => x.Id == 1); // TODO: change this
+
                 using (var stream = File.Open(wordsListPath, FileMode.Open, FileAccess.Read))
                 {
                     using (var reader = ExcelReaderFactory.CreateReader(stream))
@@ -46,7 +70,7 @@ namespace mWords.Data
                                 var translation = reader.GetString(1);
                                 var pronunciation = reader.GetString(2);
 
-                                context.WordsDictionary.Add(new DictionaryEntry { Word = word, Translation = translation, Pronunciation = pronunciation });
+                                context.DictionaryEntries.Add(new DictionaryEntry { Word = word, Translation = translation, Pronunciation = pronunciation, DictionarySet = firstSet });
                             }
                         } while (reader.NextResult()); // next Sheet
                     }
