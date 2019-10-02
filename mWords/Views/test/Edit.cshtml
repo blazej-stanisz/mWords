@@ -1,0 +1,50 @@
+﻿@page
+@model mWords.Views.test.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>DictionaryEntry</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="DictionaryEntry.Id" />
+            <div class="form-group">
+                <label asp-for="DictionaryEntry.Word" class="control-label"></label>
+                <input asp-for="DictionaryEntry.Word" class="form-control" />
+                <span asp-validation-for="DictionaryEntry.Word" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DictionaryEntry.Translation" class="control-label"></label>
+                <input asp-for="DictionaryEntry.Translation" class="form-control" />
+                <span asp-validation-for="DictionaryEntry.Translation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DictionaryEntry.Pronunciation" class="control-label"></label>
+                <input asp-for="DictionaryEntry.Pronunciation" class="form-control" />
+                <span asp-validation-for="DictionaryEntry.Pronunciation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DictionaryEntry.DictionarySetId" class="control-label"></label>
+                <select asp-for="DictionaryEntry.DictionarySetId" class="form-control" asp-items="ViewBag.DictionarySetId"></select>
+                <span asp-validation-for="DictionaryEntry.DictionarySetId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

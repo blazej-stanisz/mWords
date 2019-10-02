@@ -1,0 +1,54 @@
+﻿@page
+@model mWords.Views.test.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DictionaryEntry[0].Word)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DictionaryEntry[0].Translation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DictionaryEntry[0].Pronunciation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DictionaryEntry[0].DictionarySet)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.DictionaryEntry) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Word)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Translation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pronunciation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DictionarySet.CoverColorHex)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

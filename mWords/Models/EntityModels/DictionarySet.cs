@@ -23,6 +23,6 @@ namespace mWords.Models.EntityModels
         public string CoverColorHex { get; set; }
 
         // foreign objects
-        public virtual ICollection<DictionaryEntry> DictionaryEntries { get; set; }
+        public ICollection<DictionaryEntry> DictionaryEntries { get; set; }
     }
 }

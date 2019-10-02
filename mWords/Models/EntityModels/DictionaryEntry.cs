@@ -26,6 +26,6 @@ namespace mWords.Models.EntityModels
         public int DictionarySetId { get; set; }
 
         // foreign objects
-        public virtual DictionarySet DictionarySet { get; set; }
+        public DictionarySet DictionarySet { get; set; }
     }
 }
