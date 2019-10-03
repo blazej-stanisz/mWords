@@ -86,9 +86,8 @@ namespace mWords.Data
 
         private static void InsertTestUserData(ApplicationDbContext context)
         {
-            context.Users.Add(new Microsoft.AspNetCore.Identity.IdentityUser
+            context.Users.Add(new Microsoft.AspNetCore.Identity.IdentityUser<long>
             {
-                Id = "85a11aad-6561-4a09-ab79-5e8d24948ed5",
                 UserName = "testuser@test.com",
                 NormalizedUserName = "TESTUSER@TEST.COM",
                 Email = "testuser@test.com",

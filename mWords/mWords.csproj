@@ -5,6 +5,11 @@
     <UserSecretsId>mWordsDatabase</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Migrations\20191003192655_initial.cs" />
+    <Compile Remove="Migrations\20191003192655_initial.Designer.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="ExcelDataReader" Version="3.6.0" />

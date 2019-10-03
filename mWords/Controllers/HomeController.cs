@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using mWords.Data;
 using mWords.Models;
+using mWords.Models.EntityModels;
 
 namespace mWords.Controllers
 {
@@ -26,6 +27,9 @@ namespace mWords.Controllers
 
         public IActionResult Index()
         {
+            //var a = new ApplicationUser();
+            //var b = new IdentityUser(this.User.Identity.Name);
+            
             //var a = _context.DictionaryEntries.Include(d => d.DictionarySet).ToList();
 
             var dictionarySets = _context.DictionarySets.ToList();

@@ -14,7 +14,8 @@ namespace mWords.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true)
@@ -28,7 +29,8 @@ namespace mWords.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     UserName = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
                     Email = table.Column<string>(maxLength: 256, nullable: true),
@@ -50,19 +52,20 @@ namespace mWords.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DictionaryEntries",
+                name: "DictionarySets",
                 schema: "mw",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Word = table.Column<string>(maxLength: 1000, nullable: false),
-                    Translation = table.Column<string>(nullable: true),
-                    Pronunciation = table.Column<string>(maxLength: 1000, nullable: true)
+                    Name = table.Column<string>(maxLength: 1000, nullable: false),
+                    Description = table.Column<string>(maxLength: 1000, nullable: false),
+                    Level = table.Column<string>(maxLength: 1000, nullable: false),
+                    CoverColorHex = table.Column<string>(maxLength: 1000, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DictionaryEntries", x => x.Id);
+                    table.PrimaryKey("PK_DictionarySets", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -71,7 +74,7 @@ namespace mWords.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleId = table.Column<string>(nullable: false),
+                    RoleId = table.Column<long>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
                 },
@@ -92,7 +95,7 @@ namespace mWords.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(nullable: false),
+                    UserId = table.Column<long>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
                 },
@@ -114,7 +117,7 @@ namespace mWords.Migrations
                     LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
                     ProviderKey = table.Column<string>(maxLength: 128, nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: false)
+                    UserId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -131,8 +134,8 @@ namespace mWords.Migrations
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(nullable: false),
-                    RoleId = table.Column<string>(nullable: false)
+                    UserId = table.Column<long>(nullable: false),
+                    RoleId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -155,7 +158,7 @@ namespace mWords.Migrations
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(nullable: false),
+                    UserId = table.Column<long>(nullable: false),
                     LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
                     Name = table.Column<string>(maxLength: 128, nullable: false),
                     Value = table.Column<string>(nullable: true)
@@ -167,6 +170,30 @@ namespace mWords.Migrations
                         name: "FK_AspNetUserTokens_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DictionaryEntries",
+                schema: "mw",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Word = table.Column<string>(maxLength: 1000, nullable: false),
+                    Translation = table.Column<string>(nullable: true),
+                    Pronunciation = table.Column<string>(maxLength: 1000, nullable: true),
+                    DictionarySetId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DictionaryEntries", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DictionaryEntries_DictionarySets_DictionarySetId",
+                        column: x => x.DictionarySetId,
+                        principalSchema: "mw",
+                        principalTable: "DictionarySets",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -211,10 +238,23 @@ namespace mWords.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_DictionaryEntries_DictionarySetId",
+                schema: "mw",
+                table: "DictionaryEntries",
+                column: "DictionarySetId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_DictionaryEntries_Word",
                 schema: "mw",
                 table: "DictionaryEntries",
                 column: "Word",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DictionarySets_Name",
+                schema: "mw",
+                table: "DictionarySets",
+                column: "Name",
                 unique: true);
         }
 
@@ -244,6 +284,10 @@ namespace mWords.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "DictionarySets",
+                schema: "mw");
         }
     }
 }
