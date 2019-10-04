@@ -44,10 +44,11 @@ namespace mWords.Data
             modelBuilder.Entity<DictionarySet>().ToTable("DictionarySets", schemaName);
 
             modelBuilder.Entity<DictionarySet>(entity => {
-                entity.HasIndex(e => e.Name).IsUnique();
                 entity.Property(e => e.Name).HasMaxLength(WordMaxLength).IsRequired();
                 entity.Property(e => e.Description).HasMaxLength(WordMaxLength).IsRequired();
+                entity.Property(e => e.LanguagesPair).HasMaxLength(WordMaxLength).IsRequired();
                 entity.Property(e => e.Level).HasMaxLength(WordMaxLength).IsRequired();
+                entity.Property(e => e.LevelDescription).HasMaxLength(WordMaxLength).IsRequired();
                 entity.Property(e => e.CoverColorHex).HasMaxLength(WordMaxLength).IsRequired();
             });
         }

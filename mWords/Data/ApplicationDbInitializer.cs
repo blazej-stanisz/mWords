@@ -12,6 +12,13 @@ namespace mWords.Data
     {
         public static void Initialize(ApplicationDbContext context)
         {
+            context.Database.EnsureCreated();
+
+            if (context.DictionaryEntries.Any())
+            {
+                return; // DB has been seeded
+            }
+
             AddDictionarySets(context);
             ImportDictionaryEntries(context);
             InsertTestUserData(context);
@@ -21,17 +28,21 @@ namespace mWords.Data
         {
             context.DictionarySets.Add(new DictionarySet
             {
-                Name = "1001 English Words Elementary//Intermediate Level EN -> PL",
-                Description = "The Elementary//Intermediate set of 1001 English words.",
+                Name = "1001 English Words",
+                Description = "The Elementary/Intermediate set of 1001 English words.",
+                LanguagesPair = "EN-PL",
                 Level = "A1-B1",
+                LevelDescription = "Elementary/Intermediate Level",
                 CoverColorHex = "#E8F8F5" // https://htmlcolorcodes.com/
             });
 
             context.DictionarySets.Add(new DictionarySet
             {
-                Name = "1001 English Words Intermediate//Upper-Intermediate Level EN -> PL",
-                Description = "The Intermediate//Upper-Intermediate set of 1000 English words.",
+                Name = "1000 English Words",
+                Description = "The Intermediate/Upper-Intermediate set of 1000 English words.",
+                LanguagesPair = "EN-PL",
                 Level = "B1-B2",
+                LevelDescription = "Intermediate/Upper-Intermediate",
                 CoverColorHex = "#FEF9E7"
             });
 
@@ -41,13 +52,6 @@ namespace mWords.Data
         private static void ImportDictionaryEntries(ApplicationDbContext context)
         {
             var wordsListPath = $"{Directory.GetCurrentDirectory()}\\Data\\WordsList.xlsx";
-
-            context.Database.EnsureCreated();
-
-            if (context.DictionaryEntries.Any())
-            {
-                return; // DB has been seeded
-            }
 
             if (!File.Exists(wordsListPath))
             {

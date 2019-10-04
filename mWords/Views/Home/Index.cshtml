@@ -11,13 +11,18 @@
 
 @foreach (var dSet in Model)
 {
-    <div class="card border-success mb-3" style="max-width: 18rem;">
-        <div class="card-header bg-transparent border-success">@dSet.Name</div>
-        <div class="card-body text-success">
+    <div class="card mb-3 float-left mr-4 mt-4 mb-4" style="max-width: 18rem; background-color: @dSet.CoverColorHex;">
+        <div class="card-header">
+            <h4>@dSet.Name</h4>
+            <span>@dSet.LanguagesPair</span>
+        </div>
+        <div class="card-body">
             <h5 class="card-title">Success card title</h5>
             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
         </div>
-        <div class="card-footer bg-transparent border-success">Footer</div>
+        <div class="card-footer bg-transparent">
+            <button type="button" class="btn btn-primary">Start</button>
+        </div>
     </div>
 }
 

@@ -18,7 +18,11 @@ namespace mWords.Models.EntityModels
 
         public string Description { get; set; }
 
+        public string LanguagesPair { get; set; }
+
         public string Level { get; set; }
+
+        public string LevelDescription { get; set; }
 
         public string CoverColorHex { get; set; }
 
