@@ -18,7 +18,7 @@ namespace mWords.Models.EntityModels
             this.EntryAssignments = new HashSet<EntryAssignment>();
         }
 
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         public string Word { get; set; }
 
@@ -27,7 +27,7 @@ namespace mWords.Models.EntityModels
         public string Pronunciation { get; set; }
 
         // foreign keys
-        public int DictionarySetId { get; set; }
+        public long DictionarySetId { get; set; }
 
         // foreign objects
         public DictionarySet DictionarySet { get; set; }

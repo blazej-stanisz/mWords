@@ -17,7 +17,7 @@ namespace mWords.Models.EntityModels
         public long Id { get; set; }
 
         // foreign keys
-        public int DictionaryEntryId { get; set; }
+        public long DictionaryEntryId { get; set; }
 
         public long ApplicationUserId { get; set; }
 

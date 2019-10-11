@@ -71,7 +71,7 @@ namespace mWords.Views.test
             return RedirectToPage("./Index");
         }
 
-        private bool DictionaryEntryExists(int id)
+        private bool DictionaryEntryExists(long id)
         {
             return _context.DictionaryEntries.Any(e => e.Id == id);
         }

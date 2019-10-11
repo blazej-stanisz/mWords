@@ -8,6 +8,10 @@
   <ItemGroup>
     <Compile Remove="Migrations\20191003192655_initial.cs" />
     <Compile Remove="Migrations\20191003192655_initial.Designer.cs" />
+    <Compile Remove="Migrations\20191003192747_initial.cs" />
+    <Compile Remove="Migrations\20191003192747_initial.Designer.cs" />
+    <Compile Remove="Migrations\20191004183632_DictionarySet_details.cs" />
+    <Compile Remove="Migrations\20191004183632_DictionarySet_details.Designer.cs" />
     <Compile Remove="Migrations\20191011184144_entry-assignment-added.cs" />
     <Compile Remove="Migrations\20191011184144_entry-assignment-added.Designer.cs" />
     <Compile Remove="Migrations\20191011184519_entry-assignment-added-remove.cs" />
@@ -16,6 +20,12 @@
     <Compile Remove="Migrations\20191011184856_entry-assignment-added.Designer.cs" />
     <Compile Remove="Migrations\20191011191111_entryAssignment-added.cs" />
     <Compile Remove="Migrations\20191011191111_entryAssignment-added.Designer.cs" />
+    <Compile Remove="Migrations\20191011191337_EntryAssignment-added.cs" />
+    <Compile Remove="Migrations\20191011191337_EntryAssignment-added.Designer.cs" />
+    <Compile Remove="Migrations\20191011195803_change-int-long.cs" />
+    <Compile Remove="Migrations\20191011195803_change-int-long.Designer.cs" />
+    <Compile Remove="Migrations\20191011200245_initial.cs" />
+    <Compile Remove="Migrations\20191011200245_initial.Designer.cs" />
   </ItemGroup>
 
 

@@ -15,7 +15,7 @@ namespace mWords.Models.EntityModels
             this.DictionaryEntries = new HashSet<DictionaryEntry>();
         }
 
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         public string Name { get; set; }
 

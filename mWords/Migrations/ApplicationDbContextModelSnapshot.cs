@@ -222,13 +222,13 @@ namespace mWords.Migrations
 
             modelBuilder.Entity("mWords.Models.EntityModels.DictionaryEntry", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("DictionarySetId")
-                        .HasColumnType("int");
+                    b.Property<long>("DictionarySetId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Pronunciation")
                         .HasColumnType("nvarchar(1000)")
@@ -254,9 +254,9 @@ namespace mWords.Migrations
 
             modelBuilder.Entity("mWords.Models.EntityModels.DictionarySet", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CoverColorHex")
@@ -304,8 +304,8 @@ namespace mWords.Migrations
                     b.Property<long>("ApplicationUserId")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("DictionaryEntryId")
-                        .HasColumnType("int");
+                    b.Property<long>("DictionaryEntryId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
