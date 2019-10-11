@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace mWords.Models.EntityModels
 {
+    /// <summary>
+    /// The representation of dictionary set. The set of dictionary entries.
+    /// </summary>
     public class DictionarySet
     {
         public DictionarySet()

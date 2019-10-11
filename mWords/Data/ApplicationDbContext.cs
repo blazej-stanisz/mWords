@@ -8,7 +8,7 @@ using mWords.Models.EntityModels;
 
 namespace mWords.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<IdentityUser<long>, IdentityRole<long>, long>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser<long>, IdentityRole<long>, long>
     {
         private string schemaName = "mw";
         private int WordMaxLength = 1000;
@@ -21,6 +21,8 @@ namespace mWords.Data
         public DbSet<DictionaryEntry> DictionaryEntries { get; set; }
 
         public DbSet<DictionarySet> DictionarySets { get; set; }
+
+        public DbSet<EntryAssignment> EntryAssignments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -51,6 +53,17 @@ namespace mWords.Data
                 entity.Property(e => e.LevelDescription).HasMaxLength(WordMaxLength).IsRequired();
                 entity.Property(e => e.CoverColorHex).HasMaxLength(WordMaxLength).IsRequired();
             });
+
+            // EntryAssignment
+            modelBuilder.Entity<EntryAssignment>().ToTable("EntryAssignments", schemaName);
+
+            modelBuilder.Entity<EntryAssignment>()
+                .HasOne<DictionaryEntry>(s => s.DictionaryEntry)
+                .WithMany(c => c.EntryAssignments);
+
+            modelBuilder.Entity<EntryAssignment>()
+                .HasOne<ApplicationUser<long>>(s => s.ApplicationUser)
+                .WithMany(c => c.EntryAssignments);
         }
     }
 }

@@ -90,7 +90,7 @@ namespace mWords.Data
 
         private static void InsertTestUserData(ApplicationDbContext context)
         {
-            context.Users.Add(new Microsoft.AspNetCore.Identity.IdentityUser<long>
+            context.Users.Add(new ApplicationUser<long>
             {
                 UserName = "testuser@test.com",
                 NormalizedUserName = "TESTUSER@TEST.COM",

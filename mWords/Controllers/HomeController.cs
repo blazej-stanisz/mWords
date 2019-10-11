@@ -28,7 +28,7 @@ namespace mWords.Controllers
         public IActionResult Index()
         {
             //var a = new ApplicationUser();
-            //var b = new IdentityUser(this.User.Identity.Name);
+            //var b = new ApplicationUser(this.User.Identity.Name);
             
             //var a = _context.DictionaryEntries.Include(d => d.DictionarySet).ToList();
 

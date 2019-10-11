@@ -7,11 +7,15 @@ using System.Threading.Tasks;
 
 namespace mWords.Models.EntityModels
 {
+    /// <summary>
+    /// The representation of entry in words dictionary
+    /// </summary>
     public class DictionaryEntry
     {
         public DictionaryEntry()
         {
             this.DictionarySet = new DictionarySet();
+            this.EntryAssignments = new HashSet<EntryAssignment>();
         }
 
         public int Id { get; set; }
@@ -27,5 +31,7 @@ namespace mWords.Models.EntityModels
 
         // foreign objects
         public DictionarySet DictionarySet { get; set; }
+
+        public ICollection<EntryAssignment> EntryAssignments { get; set; }
     }
 }
