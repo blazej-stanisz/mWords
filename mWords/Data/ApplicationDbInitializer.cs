@@ -22,6 +22,7 @@ namespace mWords.Data
             AddDictionarySets(context);
             ImportDictionaryEntries(context);
             InsertTestUserData(context);
+            InsertEntryAssignments(context);
         }
 
         private static void AddDictionarySets(ApplicationDbContext context)
@@ -60,7 +61,7 @@ namespace mWords.Data
 
             try
             {
-                var firstSet = context.DictionarySets.FirstOrDefault(x => x.Id == 1); // TODO: change this
+                var set1 = context.DictionarySets.FirstOrDefault(x => x.Id == 1); // TODO: change this
 
                 using (var stream = File.Open(wordsListPath, FileMode.Open, FileAccess.Read))
                 {
@@ -74,7 +75,7 @@ namespace mWords.Data
                                 var translation = reader.GetString(1);
                                 var pronunciation = reader.GetString(2);
 
-                                context.DictionaryEntries.Add(new DictionaryEntry { Word = word, Translation = translation, Pronunciation = pronunciation, DictionarySet = firstSet });
+                                context.DictionaryEntries.Add(new DictionaryEntry { Word = word, Translation = translation, Pronunciation = pronunciation, DictionarySet = set1 });
                             }
                         } while (reader.NextResult()); // next Sheet
                     }
@@ -107,6 +108,22 @@ namespace mWords.Data
                 LockoutEnabled = true,
                 AccessFailedCount = 0
             });
+
+            context.SaveChanges();
+        }
+
+        private static void InsertEntryAssignments(ApplicationDbContext context)
+        {
+            var user1 = context.Users.FirstOrDefault(x => x.Id == 1); // TODO: change this
+            var dictionaryEntry1 = context.DictionaryEntries.FirstOrDefault(x => x.Id == 1); // TODO: change this
+            var dictionaryEntry2 = context.DictionaryEntries.FirstOrDefault(x => x.Id == 2); // TODO: change this
+            var dictionaryEntry3 = context.DictionaryEntries.FirstOrDefault(x => x.Id == 3); // TODO: change this
+            var dictionaryEntry4 = context.DictionaryEntries.FirstOrDefault(x => x.Id == 4); // TODO: change this
+
+            context.EntryAssignments.Add(new EntryAssignment { ApplicationUser = user1, DictionaryEntry = dictionaryEntry1 });
+            context.EntryAssignments.Add(new EntryAssignment { ApplicationUser = user1, DictionaryEntry = dictionaryEntry2 });
+            context.EntryAssignments.Add(new EntryAssignment { ApplicationUser = user1, DictionaryEntry = dictionaryEntry3 });
+            context.EntryAssignments.Add(new EntryAssignment { ApplicationUser = user1, DictionaryEntry = dictionaryEntry4 });
 
             context.SaveChanges();
         }

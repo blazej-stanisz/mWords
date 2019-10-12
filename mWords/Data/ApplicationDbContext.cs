@@ -29,41 +29,84 @@ namespace mWords.Data
             base.OnModelCreating(modelBuilder);
 
             // DictionaryEntry
-            modelBuilder.Entity<DictionaryEntry>().ToTable("DictionaryEntries", schemaName);
+            modelBuilder.Entity<DictionaryEntry>(b =>
+            {
+                // Primary key
+                b.HasKey(u => u.Id);
 
-            modelBuilder.Entity<DictionaryEntry>(entity => {
-                entity.HasIndex(e => e.Word).IsUnique();
-                entity.Property(e => e.Word).HasMaxLength(WordMaxLength).IsRequired();
-                entity.Property(e => e.Word).HasMaxLength(WordMaxLength).IsRequired();
-                entity.Property(e => e.Pronunciation).HasMaxLength(WordMaxLength);
+                // Indexes for "normalized" Word and Translation, to allow efficient lookups
+                b.HasIndex(u => u.Word).IsUnique();
+                b.HasIndex(u => u.Translation);
+
+                // Maps to the DictionaryEntries table
+                b.ToTable("DictionaryEntries", schemaName);
+
+                // Limit the size of columns to use efficient database types
+                b.Property(u => u.Word).HasMaxLength(WordMaxLength).IsRequired();
+                b.Property(u => u.Translation).HasMaxLength(WordMaxLength).IsRequired();
+                b.Property(e => e.Pronunciation).HasMaxLength(WordMaxLength);
+
+                // The relationships between DictionaryEntry and other entity types
+
+                // Each DictionaryEntry can have one DictionarySet
+                b.HasOne(de => de.DictionarySet).WithMany(ds => ds.DictionaryEntries).IsRequired();
+
+                // Each DictionaryEntry can have many EntryAssignments
+                b.HasMany(de => de.EntryAssignments).WithOne(ea => ea.DictionaryEntry).HasForeignKey(ea => ea.DictionaryEntryId).IsRequired();
             });
 
-            modelBuilder.Entity<DictionaryEntry>()
-                .HasOne<DictionarySet>(s => s.DictionarySet)
-                .WithMany(c => c.DictionaryEntries);
-
             // DictionarySet
-            modelBuilder.Entity<DictionarySet>().ToTable("DictionarySets", schemaName);
+            modelBuilder.Entity<DictionarySet>(b =>
+            {
+                // Primary key
+                b.HasKey(u => u.Id);
 
-            modelBuilder.Entity<DictionarySet>(entity => {
-                entity.Property(e => e.Name).HasMaxLength(WordMaxLength).IsRequired();
-                entity.Property(e => e.Description).HasMaxLength(WordMaxLength).IsRequired();
-                entity.Property(e => e.LanguagesPair).HasMaxLength(WordMaxLength).IsRequired();
-                entity.Property(e => e.Level).HasMaxLength(WordMaxLength).IsRequired();
-                entity.Property(e => e.LevelDescription).HasMaxLength(WordMaxLength).IsRequired();
-                entity.Property(e => e.CoverColorHex).HasMaxLength(WordMaxLength).IsRequired();
+                // Indexes for "normalized" Name, to allow efficient lookups
+                b.HasIndex(u => u.Name);
+
+                // Maps to the DictionarySets table
+                b.ToTable("DictionarySets", schemaName);
+
+                // Limit the size of columns to use efficient database types
+                b.Property(e => e.Name).HasMaxLength(WordMaxLength).IsRequired();
+                b.Property(e => e.Description).HasMaxLength(WordMaxLength).IsRequired();
+                b.Property(e => e.LanguagesPair).HasMaxLength(WordMaxLength).IsRequired();
+                b.Property(e => e.Level).HasMaxLength(WordMaxLength).IsRequired();
+                b.Property(e => e.LevelDescription).HasMaxLength(WordMaxLength).IsRequired();
+                b.Property(e => e.CoverColorHex).HasMaxLength(WordMaxLength).IsRequired();
+
+                // The relationships between DictionarySet and other entity types
+
+                // Each DictionarySet can have many DictionaryEntries
+                b.HasMany(ds => ds.DictionaryEntries).WithOne(de => de.DictionarySet).HasForeignKey(ea => ea.DictionarySetId).IsRequired();
             });
 
             // EntryAssignment
-            modelBuilder.Entity<EntryAssignment>().ToTable("EntryAssignments", schemaName);
+            modelBuilder.Entity<EntryAssignment>(b =>
+            {
+                // Primary key
+                b.HasKey(u => u.Id);
 
-            modelBuilder.Entity<EntryAssignment>()
-                .HasOne<DictionaryEntry>(s => s.DictionaryEntry)
-                .WithMany(c => c.EntryAssignments);
+                // Maps to the DictionaryEntries table
+                b.ToTable("EntryAssignments", schemaName);
 
-            modelBuilder.Entity<EntryAssignment>()
-                .HasOne<ApplicationUser<long>>(s => s.ApplicationUser)
-                .WithMany(c => c.EntryAssignments);
+                // The relationships between EntryAssignment and other entity types
+
+                // Each EntryAssignment can have one DictionaryEntry
+                b.HasOne(ea => ea.DictionaryEntry).WithMany(de => de.EntryAssignments).IsRequired();
+
+                // Each EntryAssignment can have one ApplicationUser
+                b.HasOne(ea => ea.ApplicationUser).WithMany(de => de.EntryAssignments).IsRequired();
+            });
+
+            // ApplicationUser
+            modelBuilder.Entity<ApplicationUser<long>>(b =>
+            {
+                // The relationships between ApplicationUser and other entity types
+
+                // Each ApplicationUser can have many EntryAssignments
+                b.HasMany(ds => ds.EntryAssignments).WithOne(de => de.ApplicationUser).HasForeignKey(ea => ea.ApplicationUserId).IsRequired();
+            });
         }
     }
 }
