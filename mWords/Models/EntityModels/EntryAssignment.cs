@@ -16,6 +16,10 @@ namespace mWords.Models.EntityModels
 
         public long Id { get; set; }
 
+        public DateTime AttemptDate { get; set; }
+
+        public byte Pigeonhole { get; set; }
+
         // foreign keys
         public long DictionaryEntryId { get; set; }
 

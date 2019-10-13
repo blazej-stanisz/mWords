@@ -120,10 +120,10 @@ namespace mWords.Data
             var dictionaryEntry3 = context.DictionaryEntries.FirstOrDefault(x => x.Id == 3); // TODO: change this
             var dictionaryEntry4 = context.DictionaryEntries.FirstOrDefault(x => x.Id == 4); // TODO: change this
 
-            context.EntryAssignments.Add(new EntryAssignment { ApplicationUser = user1, DictionaryEntry = dictionaryEntry1 });
-            context.EntryAssignments.Add(new EntryAssignment { ApplicationUser = user1, DictionaryEntry = dictionaryEntry2 });
-            context.EntryAssignments.Add(new EntryAssignment { ApplicationUser = user1, DictionaryEntry = dictionaryEntry3 });
-            context.EntryAssignments.Add(new EntryAssignment { ApplicationUser = user1, DictionaryEntry = dictionaryEntry4 });
+            context.EntryAssignments.Add(new EntryAssignment { ApplicationUser = user1, DictionaryEntry = dictionaryEntry1, AttemptDate = DateTime.Now, Pigeonhole = 1 });
+            context.EntryAssignments.Add(new EntryAssignment { ApplicationUser = user1, DictionaryEntry = dictionaryEntry2, AttemptDate = DateTime.Now, Pigeonhole = 1 });
+            context.EntryAssignments.Add(new EntryAssignment { ApplicationUser = user1, DictionaryEntry = dictionaryEntry3, AttemptDate = DateTime.Now, Pigeonhole = 1 });
+            context.EntryAssignments.Add(new EntryAssignment { ApplicationUser = user1, DictionaryEntry = dictionaryEntry4, AttemptDate = DateTime.Now, Pigeonhole = 1 });
 
             context.SaveChanges();
         }

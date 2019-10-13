@@ -97,6 +97,12 @@ namespace mWords.Data
 
                 // Each EntryAssignment can have one ApplicationUser
                 b.HasOne(ea => ea.ApplicationUser).WithMany(de => de.EntryAssignments).IsRequired();
+
+                // Pigeonhole default value
+                b.Property(b => b.Pigeonhole).HasDefaultValueSql("1");
+
+                // AttemptDate default value
+                b.Property(b => b.AttemptDate).HasDefaultValueSql("getdate()");
             });
 
             // ApplicationUser
