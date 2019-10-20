@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using mWords.Data;
 using mWords.Models;
 using mWords.Models.EntityModels;
+using mWords.Models.ViewModels;
 
 namespace mWords.Controllers
 {
@@ -27,18 +28,17 @@ namespace mWords.Controllers
 
         public IActionResult Index()
         {
+            var indexViewModel = new HomeIndexViewModel();
+            indexViewModel.dictionarySets = _context.DictionarySets.ToList();
+
+            return View(indexViewModel);
+
             //var a = new ApplicationUser();
             //var b = new ApplicationUser(this.User.Identity.Name);
-            
             //var a = _context.DictionaryEntries.Include(d => d.DictionarySet).ToList();
-
-            var dictionarySets = _context.DictionarySets.ToList();
             //this.ViewData["dictionarySets"] = dictionarySets;
-
             //this.ViewData["Title"]
             //var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            return View(dictionarySets);
         }
 
         public IActionResult Privacy()
