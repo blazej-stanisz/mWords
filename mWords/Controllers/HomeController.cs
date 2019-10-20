@@ -4,12 +4,14 @@ using System.Diagnostics;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using mWords.Data;
 using mWords.Models;
+using mWords.Models.ApplicationModels;
 using mWords.Models.EntityModels;
 using mWords.Models.ViewModels;
 
@@ -19,17 +21,22 @@ namespace mWords.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, IMapper mapper)
         {
             _logger = logger;
             _context = context;
+            _mapper = mapper;
         }
 
         public IActionResult Index()
         {
             var indexViewModel = new HomeIndexViewModel();
             indexViewModel.dictionarySets = _context.DictionarySets.ToList();
+
+            var aa = _context.DictionaryEntries.FirstOrDefault();
+            var result = _mapper.Map<DictionaryEntryAppModel>(aa);
 
             return View(indexViewModel);
 

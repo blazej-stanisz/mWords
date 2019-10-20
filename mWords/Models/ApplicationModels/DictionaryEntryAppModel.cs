@@ -7,5 +7,12 @@ namespace mWords.Models.ApplicationModels
 {
     public class DictionaryEntryAppModel
     {
+        public long Id { get; set; }
+
+        public string Word { get; set; }
+
+        public string Translation { get; set; }
+
+        public string Pronunciation { get; set; }
     }
 }
