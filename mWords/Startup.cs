@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using mWords.Models.EntityModels;
 using AutoMapper;
+using mWords.Providers;
 
 namespace mWords
 {
@@ -45,6 +46,9 @@ namespace mWords
 
             services.AddAutoMapper(typeof(Startup));
             services.AddMvc();
+
+            // dependency injection
+            services.AddScoped<IGenericProvider, GenericProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

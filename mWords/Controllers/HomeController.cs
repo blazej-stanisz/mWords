@@ -14,6 +14,7 @@ using mWords.Models;
 using mWords.Models.ApplicationModels;
 using mWords.Models.EntityModels;
 using mWords.Models.ViewModels;
+using mWords.Providers;
 
 namespace mWords.Controllers
 {
@@ -22,12 +23,14 @@ namespace mWords.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
+        private readonly IGenericProvider _genericProvider;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, IMapper mapper)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, IMapper mapper, IGenericProvider genericProvider)
         {
             _logger = logger;
             _context = context;
             _mapper = mapper;
+            _genericProvider = genericProvider;
         }
 
         public IActionResult Index()
@@ -37,6 +40,8 @@ namespace mWords.Controllers
 
             var aa = _context.DictionaryEntries.FirstOrDefault();
             var result = _mapper.Map<DictionaryEntryAppModel>(aa);
+
+            var res1 = _genericProvider.GetById<DictionaryEntry, DictionaryEntryAppModel>(1);
 
             return View(indexViewModel);
 
