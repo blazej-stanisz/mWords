@@ -15,6 +15,7 @@ using mWords.Models.ApplicationModels;
 using mWords.Models.EntityModels;
 using mWords.Models.ViewModels;
 using mWords.Providers;
+using mWords.Providers.Interfaces;
 
 namespace mWords.Controllers
 {
@@ -23,14 +24,19 @@ namespace mWords.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
-        private readonly IGenericProvider _genericProvider;
+        private readonly IDictionarySetsProvider _dsp;
+        private readonly IDictionaryEntriesProvider _dep;
+        private readonly IEntryAssignmentsProvider _eap;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, IMapper mapper, IGenericProvider genericProvider)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, IMapper mapper, 
+            IDictionarySetsProvider dsp, IDictionaryEntriesProvider dep, IEntryAssignmentsProvider eap)
         {
             _logger = logger;
             _context = context;
             _mapper = mapper;
-            _genericProvider = genericProvider;
+            _dsp = dsp;
+            _dep = dep;
+            _eap = eap;
         }
 
         public IActionResult Index()
@@ -38,10 +44,9 @@ namespace mWords.Controllers
             var indexViewModel = new HomeIndexViewModel();
             indexViewModel.dictionarySets = _context.DictionarySets.ToList();
 
-            var aa = _context.DictionaryEntries.FirstOrDefault();
-            var result = _mapper.Map<DictionaryEntryAppModel>(aa);
-
-            var res1 = _genericProvider.GetById<DictionaryEntry, DictionaryEntryAppModel>(1);
+            var res1 = _dsp.GetById(1);
+            var res2 = _dep.GetById(1);
+            var res3 = _eap.GetById(1);
 
             return View(indexViewModel);
 

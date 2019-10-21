@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using mWords.Models.EntityModels;
 using AutoMapper;
 using mWords.Providers;
+using mWords.Providers.Interfaces;
 
 namespace mWords
 {
@@ -48,7 +49,9 @@ namespace mWords
             services.AddMvc();
 
             // dependency injection
-            services.AddScoped<IGenericProvider, GenericProvider>();
+            services.AddScoped<IEntryAssignmentsProvider, EntryAssignmentsProvider>();
+            services.AddScoped<IDictionaryEntriesProvider, DictionaryEntriesProvider>();
+            services.AddScoped<IDictionarySetsProvider, DictionarySetsProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
