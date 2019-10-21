@@ -3,6 +3,7 @@
 }
 
 @using mWords.Models.ViewModels
+@using mWords.Models.ApplicationModels
 @model HomeIndexViewModel
 
 <div class="text-center">
@@ -12,7 +13,7 @@
 
 <div class="container">
     @{ 
-        var tempRowItems = new List<mWords.Models.EntityModels.DictionarySet>();
+        var tempRowItems = new List<DictionarySetAppModel>();
         var rowsCount = 3;
     }
 

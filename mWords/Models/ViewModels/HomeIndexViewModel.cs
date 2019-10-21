@@ -1,4 +1,5 @@
-﻿using mWords.Models.EntityModels;
+﻿using mWords.Models.ApplicationModels;
+using mWords.Models.EntityModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ namespace mWords.Models.ViewModels
 {
     public class HomeIndexViewModel
     {
-        public List<DictionarySet> dictionarySets { get; set; }
+        public List<DictionarySetAppModel> dictionarySets { get; set; }
 
     }
 }

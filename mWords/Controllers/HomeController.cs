@@ -42,7 +42,7 @@ namespace mWords.Controllers
         public IActionResult Index()
         {
             var indexViewModel = new HomeIndexViewModel();
-            indexViewModel.dictionarySets = _context.DictionarySets.ToList();
+            indexViewModel.dictionarySets = _dsp.GetAll();
 
             var res1 = _dsp.GetById(1);
             var res2 = _dep.GetById(1);
