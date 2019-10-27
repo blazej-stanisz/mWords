@@ -12,5 +12,14 @@ namespace mWords.Models.ApplicationModels
         public DateTime AttemptDate { get; set; }
 
         public byte Pigeonhole { get; set; }
+
+
+        // foreign keys
+        public long DictionaryEntryId { get; set; }
+
+
+        // foreign objects
+
+        public DictionaryEntryAppModel DictionaryEntry { get; set; }
     }
 }
