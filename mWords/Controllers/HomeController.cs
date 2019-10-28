@@ -46,17 +46,8 @@ namespace mWords.Controllers
             var indexViewModel = new HomeIndexViewModel();
             indexViewModel.dictionarySets = _dsp.GetAll();
 
-            var res1 = _dsp.Get(1);
-            var res2 = _dep.Get(1);
-            var res3 = _eap.Get(1);
-            //var res4 = _eap.GetQueryable().Include(z => z.DictionaryEntry).FirstOrDefault(x => x.Id == 1);
-            //var res4x = _context.Find(1)
-            var res5 = _eap.Get(x => x.Id == 1 || x.Id == 2);
-            var res6 = _eap.GetTest(1, ip => ip.Include(p => p.DictionaryEntry).Include(a => a.ApplicationUser));
-            var res7 = _eap.GetTest2(x => x.Id == 1, ip => ip.Include(p => p.DictionaryEntry).Include(a => a.ApplicationUser));
-
-            var res8 = _eap.GetTest(1);
-            var res9 = _eap.GetTest2(x => x.Id == 1);
+            var res1 = _eap.Get(x => x.Id == 1 || x.Id == 2);
+            var res2 = _eap.Get(x => x.Id == 1 || x.Id == 2, ic => ic.Include(p => p.DictionaryEntry).Include(o=>o.ApplicationUser));
 
             return View(indexViewModel);
 

@@ -21,5 +21,7 @@ namespace mWords.Models.ApplicationModels
         // foreign objects
 
         public DictionaryEntryAppModel DictionaryEntry { get; set; }
+
+        public ApplicationUserAppModel ApplicationUser { get; set; }
     }
 }

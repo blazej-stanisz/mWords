@@ -36,23 +36,6 @@ namespace mWords.Providers
             _mapper = mapper;
         }
 
-        public TAppModel Get(long id)
-        {
-            var entity = this._context.Set<TEntity>().Find(id);
-            return this._mapper.Map<TAppModel>(entity);
-        }
-
-        public TAppModel GetTest(long id, Func<IIncludable<TEntity>, IIncludable> includes = null)
-        {
-            var dbSet = (DbSet<TEntity>)this._context.Set<TEntity>().IncludeMultiple(includes).FirstOrDefault();
-            var aa =  dbSet.Find(id);
-            return this._mapper.Map<TAppModel>(aa);
-
-            var entity = this._context.Set<TEntity>().Find(id).ToQueryable().IncludeMultiple(includes).FirstOrDefault();
-            //var entity = this._context.Set<TEntity>().Find(id).ToQueryable().IncludeMultiple(includes).FirstOrDefault();
-            return this._mapper.Map<TAppModel>(entity);
-        }
-
         public List<TAppModel> Get(Expression<Func<TEntity, bool>> predicate)
         {
             var querable = this.GetQueryable();
@@ -60,7 +43,7 @@ namespace mWords.Providers
             return this._mapper.Map<List<TAppModel>>(selected);
         }
 
-        public List<TAppModel> GetTest2(Expression<Func<TEntity, bool>> predicate, Func<IIncludable<TEntity>, IIncludable> includes = null)
+        public List<TAppModel> Get(Expression<Func<TEntity, bool>> predicate, Func<IIncludable<TEntity>, IIncludable> includes = null)
         {
             var querable = this.GetQueryable();
             var selected = querable.Where(predicate).IncludeMultiple(includes);
@@ -94,15 +77,6 @@ namespace mWords.Providers
         public IQueryable<TEntity> GetQueryable()
         {
             return this._context.Set<TEntity>().AsQueryable();
-        }
-
-        public bool Exists(long id)
-        {
-            return this.Get(id) != null;
-        }
-
-        
-
-        
+        }       
     }
 }

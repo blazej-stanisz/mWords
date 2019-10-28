@@ -15,6 +15,7 @@ namespace mWords
             CreateMap<DictionaryEntry, DictionaryEntryAppModel>();
             CreateMap<DictionarySet, DictionarySetAppModel>();
             CreateMap<EntryAssignment, EntryAssignmentAppModel>();
+            CreateMap<ApplicationUser<long>, ApplicationUserAppModel>();
         }
     }
 }

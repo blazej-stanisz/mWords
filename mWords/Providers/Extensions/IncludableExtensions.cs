@@ -22,27 +22,5 @@ namespace mWords.Providers.Extensions
 
             return new IncludableMany<TEntity, TProperty>(result);
         }
-
-        //public static IIncludable<TEntity, TOtherProperty>
-        //    ThenInclude<TEntity, TOtherProperty, TProperty>(
-        //        this IIncludable<TEntity, TProperty> includes,
-        //        Expression<Func<TProperty, TOtherProperty>> propertySelector)
-        //    where TEntity : class
-        //{
-        //    var result = ((IncludableMany<TEntity, TProperty>)includes)
-        //        .IncludableInput.ThenInclude(propertySelector);
-        //    return new IncludableMany<TEntity, TOtherProperty>(result);
-        //}
-
-        //public static IIncludable<TEntity, TOtherProperty>
-        //    ThenInclude<TEntity, TOtherProperty, TProperty>(
-        //        this IIncludable<TEntity, IEnumerable<TProperty>> includes,
-        //        Expression<Func<TProperty, TOtherProperty>> propertySelector)
-        //    where TEntity : class
-        //{
-        //    var result = ((IncludableMany<TEntity, IEnumerable<TProperty>>)includes)
-        //        .IncludableInput.ThenInclude(propertySelector);
-        //    return new IncludableMany<TEntity, TOtherProperty>(result);
-        //}
     }
 }
