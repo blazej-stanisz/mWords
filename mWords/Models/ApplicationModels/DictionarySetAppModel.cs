@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static mWords.Models.ApplicationModels.AppModelEnums;
 
 namespace mWords.Models.ApplicationModels
 {
@@ -20,5 +21,7 @@ namespace mWords.Models.ApplicationModels
         public string LevelDescription { get; set; }
 
         public string CoverColorHex { get; set; }
+
+        public DictionarySetStatus Status { get; set; }
     }
 }

@@ -38,7 +38,17 @@
                                         level: @rowItem.Level
                                     </span>
                                 </h6>
-                                <h6 class="card-subtitle mb-2 text-muted">status: <span class="badge badge-success">Started</span></h6>
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                    status:
+                                    @if (@rowItem.Status == AppModelEnums.DictionarySetStatus.InProgress)
+                                    {
+                                        <span class="badge badge-success">In progress</span>
+                                    }
+                                    @if (@rowItem.Status == AppModelEnums.DictionarySetStatus.NotStarted)
+                                    {
+                                        <span class="badge badge-secondary">Not started</span>
+                                    }
+                                </h6>
                                 <h6 class="card-subtitle mb-2 text-muted">progress:</h6>
                                 <div class="progress">
                                     <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: 10%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>

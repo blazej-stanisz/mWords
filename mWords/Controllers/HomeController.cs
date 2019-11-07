@@ -26,30 +26,45 @@ namespace mWords.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
-        private readonly IDictionarySetsProvider _dsp;
-        private readonly IDictionaryEntriesProvider _dep;
-        private readonly IEntryAssignmentsProvider _eap;
+        private readonly IDictionarySetsProvider _dictionarySetsProvider;
+        private readonly IDictionaryEntriesProvider _dictionaryEntriesProvider;
+        private readonly IEntryAssignmentsProvider _entryAssignmentsProvider;
 
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, IMapper mapper, 
-            IDictionarySetsProvider dsp, IDictionaryEntriesProvider dep, IEntryAssignmentsProvider eap)
+            IDictionarySetsProvider dictionarySetsProvider, IDictionaryEntriesProvider dictionaryEntriesProvider, IEntryAssignmentsProvider entryAssignmentsProvider)
         {
             _logger = logger;
             _context = context;
             _mapper = mapper;
-            _dsp = dsp;
-            _dep = dep;
-            _eap = eap;
+            _dictionarySetsProvider = dictionarySetsProvider;
+            _dictionaryEntriesProvider = dictionaryEntriesProvider;
+            _entryAssignmentsProvider = entryAssignmentsProvider;
         }
 
         public IActionResult Index()
         {
             var indexViewModel = new HomeIndexViewModel();
-            indexViewModel.dictionarySets = _dsp.GetAll();
+            var dictionarySets =_dictionarySetsProvider.GetAll();
 
-            var res1 = _eap.Get(x => x.Id == 1 || x.Id == 2);
-            var res2 = _eap.Get(x => x.Id == 1 || x.Id == 2, ic => ic.Include(p => p.DictionaryEntry).Include(o=>o.ApplicationUser));
+            var setsInProgressEntities = _entryAssignmentsProvider.GetQueryable().Select(s => s.DictionaryEntry.DictionarySet).Distinct();            
+            foreach (var item in dictionarySets)
+            {
+                if (setsInProgressEntities.Any(s => s.Id == item.Id))
+                {
+                    item.Status = AppModelEnums.DictionarySetStatus.InProgress;
+                }
+            }
+
+            indexViewModel.dictionarySets = dictionarySets;
 
             return View(indexViewModel);
+
+
+            //var indexViewModel = new HomeIndexViewModel();
+            //var dictionarySets = _dsp.GetAll();
+
+            //var res1 = _eap.Get(x => x.Id == 1 || x.Id == 2);
+            //var res2 = _eap.Get(x => x.Id == 1 || x.Id == 2, ic => ic.Include(p => p.DictionaryEntry).Include(o=>o.ApplicationUser));
 
             //var a = new ApplicationUser();
             //var b = new ApplicationUser(this.User.Identity.Name);
