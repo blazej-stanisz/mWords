@@ -22,6 +22,9 @@ namespace mWords.Models.ApplicationModels
 
         public string CoverColorHex { get; set; }
 
+        // view properties
         public DictionarySetStatus Status { get; set; }
+
+        public int Progress { get; set; }
     }
 }
