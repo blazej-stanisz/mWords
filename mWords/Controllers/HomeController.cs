@@ -44,16 +44,18 @@ namespace mWords.Controllers
         public IActionResult Index()
         {
             var indexViewModel = new HomeIndexViewModel();
+            var userId = long.Parse(this.User.FindFirstValue(ClaimTypes.NameIdentifier));
             var dictionarySets =_dictionarySetsProvider.GetAll();
 
             //TODO get data for particular user
-            var setsInProgressEntities = _entryAssignmentsProvider.GetQueryable().Select(s => s.DictionaryEntry.DictionarySet).Distinct();            
+            var userSets = _entryAssignmentsProvider.GetQueryable().Where(e => e.ApplicationUserId == userId);
+            var setsInProgressEntities = userSets.Select(s => s.DictionaryEntry.DictionarySet).Distinct();            
             foreach (var item in dictionarySets)
             {
                 if (setsInProgressEntities.Any(s => s.Id == item.Id))
                 {
                     item.Status = AppModelEnums.DictionarySetStatus.InProgress;
-                    var inProgress = _entryAssignmentsProvider.GetQueryable().Count(x => x.DictionaryEntry.DictionarySet.Id == item.Id);
+                    var inProgress = userSets.Count(x => x.DictionaryEntry.DictionarySet.Id == item.Id);
                     var allInSet = _dictionaryEntriesProvider.GetQueryable().Count(x => x.DictionarySet.Id == item.Id);
                     item.Progress = (int)Math.Ceiling((decimal)inProgress / (decimal)allInSet * 100);
                 }
